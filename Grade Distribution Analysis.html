@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<!-- saved from url=(0065)file:///Users/zpa-eugene/Downloads/grade_distribution_charts.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Distribution Analysis</title>
+    <script src="./Grade Distribution Analysis_files/chart.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        .metric-card {
+            display: inline-block;
+            background: #e8f4f8;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 6px;
+            text-align: center;
+            min-width: 120px;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+        .metric-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .insight-box {
+            background: #f0f8f0;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Zenith Prep Academy - Grade Distribution Analysis</h1>
+    
+    <div class="chart-container">
+        <h2>Enrollment Trends: 2024 vs 2025</h2>
+        <div class="chart-wrapper">
+            <canvas id="enrollmentChart" width="2632" height="800" style="display: block; box-sizing: border-box; height: 400px; width: 1316px;"></canvas>
+        </div>
+        <div class="insight-box">
+            <strong>Key Insight:</strong> The main enrollment shift is Grade 10 growth (+2.9 points) and Grade 12 decline (-2.3 points). 
+            Target demographic (Grade 9 and below) remained stable at ~46-47%.
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2>Lead vs Enrollment Conversion Comparison (2024 vs 2025)</h2>
+        <div class="chart-wrapper">
+            <canvas id="conversionComparisonChart" width="2632" height="800" style="display: block; box-sizing: border-box; height: 400px; width: 1316px;"></canvas>
+        </div>
+        <div class="insight-box">
+            <strong>Conversion Evolution:</strong> Both years show Grades 9-11 conversion advantage, but 2024 had more dramatic differences. 
+            2025 shows more balanced conversion across grades.
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2>Strategic Segment Performance</h2>
+        <h3 style="text-align: center; color: #666; margin-bottom: 20px;">Target Demographic: Grade 9 and Under</h3>
+        <div style="text-align: center;">
+            <div class="metric-card">
+                <div class="metric-value">46.2%</div>
+                <div class="metric-label">2024 Enrollments<br>Grade 9 &amp; Under</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">47.5%</div>
+                <div class="metric-label">2025 Enrollments<br>Grade 9 &amp; Under</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">+1.3pts</div>
+                <div class="metric-label">Target Demo<br>Improvement<br>2024→2025</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">65%</div>
+                <div class="metric-label">Grades 9-11<br>Strategic Focus<br>Stable Both Years</div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 15px;">
+            <div class="metric-card">
+                <div class="metric-value">43.4%</div>
+                <div class="metric-label">2024 Leads<br>Grade 9 &amp; Under</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">45.1%</div>
+                <div class="metric-label">2025 Leads<br>Grade 9 &amp; Under</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">+1.7pts</div>
+                <div class="metric-label">Lead Generation<br>Improvement<br>2024→2025</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2>Lead Generation Focus Trends (2024 → 2025)</h2>
+        <div class="chart-wrapper">
+            <canvas id="leadTrendsChart" width="2632" height="800" style="display: block; box-sizing: border-box; height: 400px; width: 1316px;"></canvas>
+        </div>
+        <div class="insight-box">
+            <strong>Marketing Success:</strong> Lead creation became more concentrated in target Grades 9-11 
+            (+7.5 points) while target demographic (Grade 9 &amp; under) also improved (+1.7 points).
+        </div>
+    </div>
+
+    <script>
+        // Color palette
+        const colors = {
+            primary: '#2c5aa0',
+            secondary: '#4CAF50',
+            accent: '#FF6B35',
+            light: '#e8f4f8',
+            grade9: '#2E8B57',
+            grade10: '#4169E1',
+            grade11: '#DC143C',
+            grade12: '#FF8C00',
+            other: '#708090'
+        };
+
+        // Chart 1: Enrollment Trends 2024 vs 2025 (CORRECTED DATA)
+        const ctx1 = document.getElementById('enrollmentChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Grade 6 & Below', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'],
+                datasets: [{
+                    label: '2024 Enrollments',
+                    data: [6.6, 8.1, 10.4, 21.2, 22.1, 21.7, 9.9],
+                    backgroundColor: colors.primary + '80',
+                    borderColor: colors.primary,
+                    borderWidth: 1
+                }, {
+                    label: '2025 Enrollments',
+                    data: [6.5, 6.7, 13.3, 21.0, 25.0, 19.9, 7.6],
+                    backgroundColor: colors.secondary + '80',
+                    borderColor: colors.secondary,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Percentage (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Enrollment Distribution: Grade 10 Growth (+2.9 pts), Grade 12 Decline (-2.3 pts)'
+                    },
+                    legend: {
+                        display: true
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Combined Lead vs Enrollment Conversion (2024 vs 2025)
+        const ctx2 = document.getElementById('conversionComparisonChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Grade 6 & Below', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'],
+                datasets: [{
+                    label: '2024 Lead Creation',
+                    data: [7.4, 8.0, 11.1, 15.7, 18.4, 19.5, 7.9],
+                    borderColor: colors.accent + 'AA',
+                    backgroundColor: colors.accent + '20',
+                    fill: false,
+                    tension: 0.1,
+                    pointBackgroundColor: colors.accent,
+                    pointBorderColor: colors.accent,
+                    pointRadius: 5,
+                    borderDash: [5, 5]
+                }, {
+                    label: '2024 Final Enrollments',
+                    data: [6.6, 8.1, 10.4, 21.2, 22.1, 21.7, 9.9],
+                    borderColor: colors.primary,
+                    backgroundColor: colors.primary + '20',
+                    fill: false,
+                    tension: 0.1,
+                    pointBackgroundColor: colors.primary,
+                    pointBorderColor: colors.primary,
+                    pointRadius: 6
+                }, {
+                    label: '2025 Lead Creation',
+                    data: [9.0, 7.4, 11.0, 17.7, 20.3, 23.1, 11.6],
+                    borderColor: colors.grade12 + 'AA',
+                    backgroundColor: colors.grade12 + '20',
+                    fill: false,
+                    tension: 0.1,
+                    pointBackgroundColor: colors.grade12,
+                    pointBorderColor: colors.grade12,
+                    pointRadius: 5,
+                    borderDash: [5, 5]
+                }, {
+                    label: '2025 Final Enrollments',
+                    data: [6.5, 6.7, 13.3, 21.0, 25.0, 19.9, 7.6],
+                    borderColor: colors.secondary,
+                    backgroundColor: colors.secondary + '20',
+                    fill: false,
+                    tension: 0.1,
+                    pointBackgroundColor: colors.secondary,
+                    pointBorderColor: colors.secondary,
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Percentage (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Lead vs Enrollment Patterns: 2024 vs 2025 Comparison'
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Chart 3: Lead Trends 2024 vs 2025 (Simplified - removed "Other Grades")
+        const ctx3 = document.getElementById('leadTrendsChart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: ['Grades 9-11', 'Grade 9 & Below (Target Demo)'],
+                datasets: [{
+                    label: '2024 Leads',
+                    data: [53.5, 43.4],
+                    backgroundColor: [colors.primary + '80', colors.secondary + '80'],
+                    borderColor: [colors.primary, colors.secondary],
+                    borderWidth: 2
+                }, {
+                    label: '2025 Leads',
+                    data: [61.0, 45.1],
+                    backgroundColor: [colors.primary, colors.secondary],
+                    borderColor: [colors.primary, colors.secondary],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 70,
+                        title: {
+                            display: true,
+                            text: 'Percentage (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Lead Generation Focus: Strategic Segments 2024 → 2025'
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Chart 3: Complete - all charts rendered above
+    </script>
+
+</body></html>
